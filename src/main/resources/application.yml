@@ -19,4 +19,4 @@ naver-cloud-sms:
   accessKey: "secretKey? accessKey"
   secretKey: "secretKey"
   serviceId: "serviceId"
-  senderPhone: "?"
+  senderPhone: "01000000000"
