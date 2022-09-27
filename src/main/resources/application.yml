@@ -1,1 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/testDB?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: ?
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+naver-cloud-sms:
+  accessKey: "secretKey? accessKey"
+  secretKey: "secretKey"
+  serviceId: "serviceId"
+  senderPhone: "?"
