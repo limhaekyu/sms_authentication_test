@@ -3,6 +3,7 @@ package com.example.sms_authentication_test.sms_auth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,8 +30,10 @@ import java.util.Random;
 @PropertySource("classpath:application.yml")
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class SmsService {
     private final String smsConfirmNum = createSmsKey();
+    private final SmsRepository smsRepository;
 
     @Value("${naver-cloud-sms.accessKey}")
     private String accessKey;
@@ -73,10 +76,7 @@ public class SmsService {
     }
 
     public SmsResponseDto sendSms(MessageDto messageDto) throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
-        System.out.println(phone);
-        System.out.println("accessKey : "+accessKey);
-        System.out.println("secretKey : " + secretKey);
-        System.out.println("serviceId : " + serviceId);
+
         String time = Long.toString(System.currentTimeMillis());
 
         HttpHeaders headers = new HttpHeaders();
@@ -109,6 +109,9 @@ public class SmsService {
 
         SmsResponseDto smsResponseDto = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+ serviceId +"/messages"), httpBody, SmsResponseDto.class);
         SmsResponseDto responseDto = new SmsResponseDto(smsConfirmNum);
+
+        Sms sms = new Sms(messageDto.getTo(), responseDto.getSmsConfirmNum());
+        smsRepository.save(sms);
         // redisUtil.setDataExpire(smsConfirmNum, messageDto.getTo(), 60 * 3L); // 유효시간 3분
         return smsResponseDto;
     }
