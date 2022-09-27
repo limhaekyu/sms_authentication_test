@@ -18,5 +18,5 @@ spring:
 naver-cloud-sms:
   accessKey: "secretKey? accessKey"
   secretKey: "secretKey"
-  serviceId: "serviceId"
+  serviceId: "sssssss"
   senderPhone: "01000000000"
