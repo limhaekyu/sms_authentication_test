@@ -93,7 +93,7 @@ public class SmsService {
                 .contentType("COMM")
                 .countryCode("82")
                 .from(phone)
-                .content("[서비스명 테스트닷] 인증번호 [" + smsConfirmNum + "]를 입력해주세요")
+                .content("[sms test] 인증번호 [" + smsConfirmNum + "]를 입력해주세요")
                 .messages(messages)
                 .build();
 
